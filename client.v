@@ -97,7 +97,7 @@ pub fn (mut p Packet) write_varint(num int) {
 }
 
 pub fn (mut p Packet) read_varint() int {
-	mut value := 0
+	mut value := u32(0)
 	mut shift := 0
 	mut index := 0
 	for {
@@ -110,7 +110,7 @@ pub fn (mut p Packet) read_varint() int {
 		}
 	}
 	p.position += index
-	return value
+	return int(value)
 }
 
 pub fn (mut p Packet) write_string(str string) {

@@ -49,7 +49,7 @@ pub fn (mut p Packet) write_varint(num int) {
 }
 
 pub fn (mut p Packet) read_varint() int {
-	mut value := 0
+	mut value := u32(0)
 	mut shift := 0
 	mut index := 0
 	for {
@@ -62,7 +62,7 @@ pub fn (mut p Packet) read_varint() int {
 		}
 	}
 	p.position += index
-	return value
+	return int(value)
 }
 
 pub fn (mut p Packet) write_string(str string) {
@@ -262,7 +262,12 @@ pub fn (mut srv Server) handle_client(mut conn net.TcpConn) {
 	addr := peer_addr.str()
 
 	for {
-		read := conn.read(mut buf) or { continue }
+		read := conn.read(mut buf) or {
+			if err.str() == 'none' {
+				break
+			}
+			continue
+		}
 		data := buf[..read].clone()
 
 		if data.len == 0 {
