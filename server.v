@@ -2,7 +2,7 @@ import net
 import time
 import rand
 
-const admin_password = 'abc123'
+const admin_password = 'ruhi123'
 
 pub struct Packet {
 pub mut:
